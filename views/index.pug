@@ -1,0 +1,284 @@
+extends layout
+
+block content
+  .wrapper
+    .sidebar(data-color='orange')
+      //
+        Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+      .logo
+        a.simple-text.logo-mini
+          | mA
+        a.simple-text.logo-normal
+          | myADMIN
+      .sidebar-wrapper
+        ul.nav
+          li.active
+            a(href='/')
+              i.now-ui-icons.design_app
+              p Panel
+          li
+            a(href='/profile')
+              i.now-ui-icons.users_single-02
+              p Profil
+          li
+            a(href='/tables')
+              i.now-ui-icons.design_bullet-list-67
+              p Cihaz Listesi
+          //
+            li
+              a(href='./icons.html')
+                i.now-ui-icons.education_atom
+                p Icons
+            li
+              a(href='./map.html')
+                i.now-ui-icons.location_map-big
+                p Maps
+            li
+              a(href='./notifications.html')
+                i.now-ui-icons.ui-1_bell-53
+                p Notifications
+            li
+              a(href='./tables.html')
+                i.now-ui-icons.design_bullet-list-67
+                p Table List
+            li
+              a(href='./typography.html')
+                i.now-ui-icons.text_caps-small
+                p Typography
+          li.active-pro
+            a(href='/logout')
+              i.now-ui-icons.media-1_button-power
+              p Oturumu Kapat
+    .main-panel
+      // Navbar
+      nav.navbar.navbar-expand-lg.fixed-top.navbar-transparent.bg-primary.navbar-absolute
+        .container-fluid
+          .navbar-wrapper
+            .navbar-toggle
+              button.navbar-toggler(type='button')
+                span.navbar-toggler-bar.bar1
+                span.navbar-toggler-bar.bar2
+                span.navbar-toggler-bar.bar3
+            a.navbar-brand Dashboard
+          button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navigation', aria-controls='navigation-index', aria-expanded='false', aria-label='Toggle navigation')
+            span.navbar-toggler-bar.navbar-kebab
+            span.navbar-toggler-bar.navbar-kebab
+            span.navbar-toggler-bar.navbar-kebab
+          #navigation.collapse.navbar-collapse.justify-content-end
+            //
+              form
+                .input-group.no-border
+                  input.form-control(type='text', value='', placeholder='Search...')
+                  .input-group-append
+                    .input-group-text
+                      i.now-ui-icons.ui-1_zoom-bold
+            ul.navbar-nav
+              //
+                li.nav-item
+                  a.nav-link(href='#pablo')
+                    i.now-ui-icons.media-2_sound-wave
+                    p
+                      span.d-lg-none.d-md-block Stats
+              li.nav-item.dropdown
+                a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='http://example.com', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                  i.now-ui-icons.users_single-02
+                  p= name
+                    span.d-lg-none.d-md-block Some Actions
+                .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
+                  a.dropdown-item(href='/profile') Profil
+                  a.dropdown-item(href='/logout') Oturumu Kapat
+      // End Navbar
+        .panel-header.panel-header-lg
+          canvas#bigDashboardChart
+      .panel-header.panel-header-sm
+      .content
+        .row
+          for element in devices
+            .col-lg-6
+              .card.card-chart
+                .card-header(data-toggle='collapse', href='#collapseExample', aria-expanded='false', aria-controls='collapseExample')
+                  h5.card-category= element.devicearea
+                  h4.card-title= element.devicename
+                  .dropdown
+                    button.btn.btn-round.btn-default.dropdown-toggle.btn-simple.btn-icon.no-caret(type='button', data-toggle='dropdown')
+                      i.now-ui-icons.loader_gear
+                    .dropdown-menu.dropdown-menu-right
+                      a.dropdown-item(href='/detail'+element.devicesocket + "-" + element.devicesensor) Şimdi İZLE!
+
+                #collapseExample.collapse
+                  .card-body
+                    .chart-area
+                      .table-responsive
+                        table.table
+                          thead.text-primary
+                            tr
+                              th
+                                span.badge.badge-success Cihaz ID
+                              th.text-body= element._id
+                            tr
+                              th
+                                span.badge.badge-success Kullanıcı ID
+                              th.text-body= element.user_id
+                            tr
+                              th
+                                span.badge.badge-success Cihaz Anahtarı
+                              th.text-body= element.deviceSecret
+
+                  .card-footer
+                    .stats
+                      i.now-ui-icons.ui-2_settings-90
+                      |  Cihaz Bilgileri
+        //
+          script.
+            var category_id = 1;
+            var title_id = 1000;
+            var Devices = ;
+            Devices.forEach(function (element) {
+              var on = document.getElementById("001").innerHTML;
+              url = "/detail" + element.devicesocket + "-" + element.devicesensor;
+              document.getElementById("001").innerHTML = on + '<div class="col-lg-4 col-md-6"><div class="card card-chart"><div class="card-header">  <h5 class="card-category" id="' + category_id + '">Email Statistics</h5><h4 class="card-title" id="' + title_id + '">24 Hours Performance</h4><div class="dropdown"><button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown"><i class="now-ui-icons loader_gear"></i></button><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="' + url + '">Watch NOW!</a></div></div></div> <div class="card-footer"> <div class="stats"><i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days</div></div></div></div>';
+              document.getElementById(category_id).innerHTML = element.devicearea;
+              document.getElementById(title_id).innerHTML = element.devicename;
+              category_id++;
+              title_id++;
+            });
+        //
+          .row
+            .col-md-6
+              .card.card-tasks
+                .card-header
+                  h5.card-category Backend development
+                  h4.card-title Tasks
+                .card-body
+                  .table-full-width.table-responsive
+                    table.table
+                      tbody
+                        tr
+                          td
+                            .form-check
+                              label.form-check-label
+                                input.form-check-input(type='checkbox', checked='')
+                                span.form-check-sign
+                          td.text-left Sign contract for "What are conference organizers afraid of?"
+                          td.td-actions.text-right
+                            button.btn.btn-info.btn-round.btn-icon.btn-icon-mini.btn-neutral(type='button', rel='tooltip', title='', data-original-title='Edit Task')
+                              i.now-ui-icons.ui-2_settings-90
+                            button.btn.btn-danger.btn-round.btn-icon.btn-icon-mini.btn-neutral(type='button', rel='tooltip', title='', data-original-title='Remove')
+                              i.now-ui-icons.ui-1_simple-remove
+                        tr
+                          td
+                            .form-check
+                              label.form-check-label
+                                input.form-check-input(type='checkbox')
+                                span.form-check-sign
+                          td.text-left Lines From Great Russian Literature? Or E-mails From My Boss?
+                          td.td-actions.text-right
+                            button.btn.btn-info.btn-round.btn-icon.btn-icon-mini.btn-neutral(type='button', rel='tooltip', title='', data-original-title='Edit Task')
+                              i.now-ui-icons.ui-2_settings-90
+                            button.btn.btn-danger.btn-round.btn-icon.btn-icon-mini.btn-neutral(type='button', rel='tooltip', title='', data-original-title='Remove')
+                              i.now-ui-icons.ui-1_simple-remove
+                        tr
+                          td
+                            .form-check
+                              label.form-check-label
+                                input.form-check-input(type='checkbox', checked='')
+                                span.form-check-sign
+                          td.text-left
+                            | Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
+                          td.td-actions.text-right
+                            button.btn.btn-info.btn-round.btn-icon.btn-icon-mini.btn-neutral(type='button', rel='tooltip', title='', data-original-title='Edit Task')
+                              i.now-ui-icons.ui-2_settings-90
+                            button.btn.btn-danger.btn-round.btn-icon.btn-icon-mini.btn-neutral(type='button', rel='tooltip', title='', data-original-title='Remove')
+                              i.now-ui-icons.ui-1_simple-remove
+                .card-footer
+                  hr
+                  .stats
+                    i.now-ui-icons.loader_refresh.spin
+                    |  Updated 3 minutes ago
+            .col-md-6
+              .card
+                .card-header
+                  h5.card-category All Persons List
+                  h4.card-title  Employees Stats
+                .card-body
+                  .table-responsive
+                    table.table
+                      thead.text-primary
+                        tr
+                          th
+                            | Name
+                          th
+                            | Country
+                          th
+                            | City
+                          th.text-right
+                            | Salary
+                      tbody
+                        tr
+                          td
+                            | Dakota Rice
+                          td
+                            | Niger
+                          td
+                            | Oud-Turnhout
+                          td.text-right
+                            | $36,738
+                        tr
+                          td
+                            | Minerva Hooper
+                          td
+                            | Curaçao
+                          td
+                            | Sinaai-Waas
+                          td.text-right
+                            | $23,789
+                        tr
+                          td
+                            | Sage Rodriguez
+                          td
+                            | Netherlands
+                          td
+                            | Baileux
+                          td.text-right
+                            | $56,142
+                        tr
+                          td
+                            | Doris Greene
+                          td
+                            | Malawi
+                          td
+                            | Feldkirchen in Kärnten
+                          td.text-right
+                            | $63,542
+                        tr
+                          td
+                            | Mason Porter
+                          td
+                            | Chile
+                          td
+                            | Gloucester
+                          td.text-right
+                            | $78,615
+      footer.footer
+        .container
+          //
+            nav
+              ul
+                li
+                  a(href='https://www.creative-tim.com')
+                    | Creative Tim
+                li
+                  a(href='http://presentation.creative-tim.com')
+                    | About Us
+                li
+                  a(href='http://blog.creative-tim.com')
+                    | Blog
+          #copyright.copyright
+            | ©
+            script.
+              document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+            | , Designed by
+            a(href='https://www.invisionapp.com', target='_blank') Invision
+            | . Coded by
+            a(href='https://www.creative-tim.com', target='_blank') Creative Tim
+            | .

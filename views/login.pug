@@ -1,0 +1,26 @@
+extends login-layout
+
+block content
+    // particles
+    #particles-js
+    // //particles
+    .w3ls-pos
+        h1 MyAdmin Panel
+        .w3ls-login.box
+            // form starts here
+            form(action='/login', method='post')
+                .agile-field-txt
+                    input(type='text', name='username', placeholder='Kullanıcı Adı', required='')
+                .agile-field-txt
+                    input#myInput(type='password', name='password', placeholder='******', required='')
+                    .agile_label
+                        input#check3(name='check3', type='checkbox', value='show password')
+                        label.check(for='check3') Beni Hatırla
+                .w3ls-bot
+                    input(type='submit', value='Oturum Aç!')
+        // //form ends here
+        // copyright
+        .copy-wthree
+            p
+                | Design by
+                a(href='http://w3layouts.com/', target='_blank') W3layouts

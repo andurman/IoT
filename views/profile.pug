@@ -1,0 +1,180 @@
+extends profile-layout
+
+block content
+    .wrapper
+        .sidebar(data-color='orange')
+            //
+              Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            .logo
+                a.simple-text.logo-mini
+                    | mA
+                a.simple-text.logo-normal
+                    | myADMIN
+            .sidebar-wrapper
+                ul.nav
+                    li
+                        a(href='/')
+                            i.now-ui-icons.design_app
+                            p Panel
+                    li.active
+                        a(href='/profile')
+                            i.now-ui-icons.users_single-02
+                            p Profil
+                    li
+                        a(href='/tables')
+                            i.now-ui-icons.design_bullet-list-67
+                            p Cihaz Listesi
+                    //
+                        li
+                            a(href='./icons.html')
+                                i.now-ui-icons.education_atom
+                                p Icons
+                        li
+                            a(href='./map.html')
+                                i.now-ui-icons.location_map-big
+                                p Maps
+                        li
+                            a(href='./notifications.html')
+                                i.now-ui-icons.ui-1_bell-53
+                                p Notifications
+                        li
+                            a(href='./tables.html')
+                                i.now-ui-icons.design_bullet-list-67
+                                p Table List
+                        li
+                            a(href='./typography.html')
+                                i.now-ui-icons.text_caps-small
+                                p Typography
+                    li.active-pro
+                        a(href='/logout')
+                            i.now-ui-icons.media-1_button-power
+                            p Oturumu Kapat
+        .main-panel
+            // Navbar
+            nav.navbar.navbar-expand-lg.fixed-top.navbar-transparent.bg-primary.navbar-absolute
+                .container-fluid
+                    .navbar-wrapper
+                        .navbar-toggle
+                            button.navbar-toggler(type='button')
+                                span.navbar-toggler-bar.bar1
+                                span.navbar-toggler-bar.bar2
+                                span.navbar-toggler-bar.bar3
+                        a.navbar-brand Profil
+                    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navigation', aria-controls='navigation-index', aria-expanded='false', aria-label='Toggle navigation')
+                        span.navbar-toggler-bar.navbar-kebab
+                        span.navbar-toggler-bar.navbar-kebab
+                        span.navbar-toggler-bar.navbar-kebab
+                    #navigation.collapse.navbar-collapse.justify-content-end
+                        //
+                          form
+                            .input-group.no-border
+                              input.form-control(type='text', value='', placeholder='Search...')
+                              .input-group-append
+                                .input-group-text
+                                  i.now-ui-icons.ui-1_zoom-bold
+                        ul.navbar-nav
+                            //
+                              li.nav-item
+                                a.nav-link(href='#pablo')
+                                  i.now-ui-icons.media-2_sound-wave
+                                  p
+                                    span.d-lg-none.d-md-block Stats
+                            li.nav-item.dropdown
+                              a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='http://example.com', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                                i.now-ui-icons.users_single-02
+                                p= name
+                                  span.d-lg-none.d-md-block Some Actions
+                              .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
+                                  a.dropdown-item(href='/profile') Profil
+                                  a.dropdown-item(href='/logout') Oturumu Kapat
+            // End Navbar
+            .panel-header.panel-header-sm
+            .content
+                .row
+                    .col-md-8
+                        .card
+                            .card-header
+                                h5.title Profil
+                            .card-body
+                                form
+                                    .row
+                                        .col-md-5.pr-1
+                                            .form-group
+                                                label Şirket
+                                                input.form-control(type='text', disabled='', placeholder='Company', value=companyName)
+                                        .col-md-3.px-1
+                                            .form-group
+                                                label Kullanıcı Adı
+                                                input.form-control(type='text', placeholder='Username', value=username)
+                                        .col-md-4.pl-1
+                                            .form-group
+                                                label Email Adresi
+                                                input.form-control(type='email', placeholder='Email', value=email)
+                                    .row
+                                        .col-md-6.pr-1
+                                            .form-group
+                                                label Adı
+                                                input.form-control(type='text', placeholder='Company', value=firstName)
+                                        .col-md-6.pl-1
+                                            .form-group
+                                                label Soyadı
+                                                input.form-control(type='text', placeholder='Last Name', value=lastName)
+                                    .row
+                                        .col-md-12
+                                            .form-group
+                                                label Adres
+                                                input.form-control(type='text', placeholder='Home Address', value=adress)
+                                    .row
+                                        .col-md-4.pr-1
+                                            .form-group
+                                                label Şehir
+                                                input.form-control(type='text', placeholder='City', value=city)
+                                        .col-md-4.px-1
+                                            .form-group
+                                                label Ülke
+                                                input.form-control(type='text', placeholder='Country', value=country)
+                                        .col-md-4.pl-1
+                                            .form-group
+                                                label Posta Kodu
+                                                input.form-control(type='number', placeholder='ZIP Code', value=postalCode)
+                    .col-md-4
+                        .card.card-user
+                            .image
+                                img(src='../assets/img/bg5.jpg', alt='...')
+                            .card-body
+                                .author
+                                    a(href='#')
+                                        img.avatar.border-gray(src='../assets/img/default-avatar.png', alt='...')
+                                        h5.title= name
+                                    p.description= username
+                            //
+                                hr
+                                .button-container
+                                    button.btn.btn-neutral.btn-icon.btn-round.btn-lg(href='#')
+                                        i.fab.fa-facebook-f
+                                    button.btn.btn-neutral.btn-icon.btn-round.btn-lg(href='#')
+                                        i.fab.fa-twitter
+                                    button.btn.btn-neutral.btn-icon.btn-round.btn-lg(href='#')
+                                        i.fab.fa-google-plus-g
+            footer.footer
+                .container
+                    nav
+                        ul
+                            li
+                                a(href='https://www.creative-tim.com')
+                                    | Creative Tim
+                            li
+                                a(href='http://presentation.creative-tim.com')
+                                    | About Us
+                            li
+                                a(href='http://blog.creative-tim.com')
+                                    | Blog
+                    #copyright.copyright
+                        | ©
+                        script.
+                            document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                        | , Designed by
+                        a(href='https://www.invisionapp.com', target='_blank') Invision
+                        | . Coded by
+                        a(href='https://www.creative-tim.com', target='_blank') Creative Tim
+                        | .

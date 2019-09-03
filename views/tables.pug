@@ -1,0 +1,168 @@
+extends tables-layout
+
+block content
+    .wrapper
+        .sidebar(data-color='orange')
+            //
+              Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            .logo
+                a.simple-text.logo-mini(href='http://www.creative-tim.com')
+                    | mA
+                a.simple-text.logo-normal(href='http://www.creative-tim.com')
+                    | myADMIN
+            .sidebar-wrapper
+                ul.nav
+                    li
+                        a(href='/')
+                            i.now-ui-icons.design_app
+                            p Panel
+                    li
+                        a(href='/profile')
+                            i.now-ui-icons.users_single-02
+                            p Profil
+                    li.active
+                        a(href='/tables')
+                            i.now-ui-icons.design_bullet-list-67
+                            p Cihaz Listesi
+                    //
+                        li
+                            a(href='./dashboard.html')
+                                i.now-ui-icons.design_app
+                                p Dashboard
+                        li
+                            a(href='./icons.html')
+                                i.now-ui-icons.education_atom
+                                p Icons
+                        li
+                            a(href='./map.html')
+                                i.now-ui-icons.location_map-big
+                                p Maps
+                        li
+                            a(href='./notifications.html')
+                                i.now-ui-icons.ui-1_bell-53
+                                p Notifications
+                        li
+                            a(href='./user.html')
+                                i.now-ui-icons.users_single-02
+                                p User Profile
+                        li.active
+                            a(href='./tables.html')
+                                i.now-ui-icons.design_bullet-list-67
+                                p Table List
+                        li
+                            a(href='./typography.html')
+                                i.now-ui-icons.text_caps-small
+                                p Typography
+                        li.active-pro
+                            a(href='./upgrade.html')
+                                i.now-ui-icons.arrows-1_cloud-download-93
+                                p Upgrade to PRO
+                    li.active-pro
+                        a(href='/logout')
+                            i.now-ui-icons.media-1_button-power
+                            p Oturumu Kapat
+        .main-panel
+            // Navbar
+            nav.navbar.navbar-expand-lg.fixed-top.navbar-transparent.bg-primary.navbar-absolute
+                .container-fluid
+                    .navbar-wrapper
+                        .navbar-toggle
+                            button.navbar-toggler(type='button')
+                                span.navbar-toggler-bar.bar1
+                                span.navbar-toggler-bar.bar2
+                                span.navbar-toggler-bar.bar3
+                        a.navbar-brand Cihaz Tablosu
+                    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navigation', aria-controls='navigation-index', aria-expanded='false', aria-label='Toggle navigation')
+                        span.navbar-toggler-bar.navbar-kebab
+                        span.navbar-toggler-bar.navbar-kebab
+                        span.navbar-toggler-bar.navbar-kebab
+                    #navigation.collapse.navbar-collapse.justify-content-end
+                        //
+                          form
+                            .input-group.no-border
+                              input.form-control(type='text', value='', placeholder='Search...')
+                              .input-group-append
+                                .input-group-text
+                                  i.now-ui-icons.ui-1_zoom-bold
+                        ul.navbar-nav
+                            //
+                              li.nav-item
+                                a.nav-link(href='#pablo')
+                                  i.now-ui-icons.media-2_sound-wave
+                                  p
+                                    span.d-lg-none.d-md-block Stats
+                            li.nav-item.dropdown
+                                a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='http://example.com', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                                    i.now-ui-icons.users_single-02
+                                    p= name
+                                    span.d-lg-none.d-md-block Some Actions
+                                .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
+                                    a.dropdown-item(href='/profile') Profil
+                                    a.dropdown-item(href='/logout') Oturumu Kapat
+            // End Navbar
+            .panel-header.panel-header-sm
+            .content
+                .row
+                    .col-md-12
+                        .card
+                            .card-header
+                                h4.card-title  Yeni Cihaz Ekle
+                            .card-body
+                                form(action='/tables/cihazkayit', method='post')
+                                    .row
+                                        .col-md-6.pr-1
+                                            .form-group
+                                                span.badge.badge-pill.badge-primary Cihaz Konumu
+                                                input.form-control(type='text', name='devicearea', placeholder='Cihaz Konumu', required='')
+                                        .col-md-6.px-1
+                                            .form-group
+                                                span.badge.badge-pill.badge-primary Sensör Çeşidi
+                                                input.form-control(type='text', name='devicename', placeholder='Sensör Çeşidi', required='')
+                                    .row
+                                        .col-md-6.px-1
+                                            button.btn.btn-fill.btn-primary(type='submit') Kaydet
+                .row
+                    .col-md-12
+                        .card
+                            .card-header
+                                h4.card-title  Cihaz Tablosu
+                            .card-body
+                                .table-responsive
+                                    table.table
+                                        thead.text-primary
+                                            tr
+                                                th
+                                                    | Cihaz ID
+                                                th
+                                                    | Cihaz Konumu
+                                                th
+                                                    | Sensör Çeşidi
+                                                th.text-right
+                                                    | Seçenekler
+                                        tbody.text-body
+                                            for element in tableContent
+                                                tr
+                                                    th
+                                                        | #{element._id}
+                                                    th
+                                                        | #{element.devicearea}
+                                                    th
+                                                        | #{element.devicename}
+                                                    td.text-right
+                                                        form(action='/tables/delete', method='post')
+                                                            a.btn.btn-info.btn-round(href='/detail' + element.devicesocket + "-" + element.devicesensor)
+                                                                i.material-icons Şimdi İZLE!
+                                                            button.btn.btn-danger.btn-round(name='vera', type='submit', value= element._id)
+                                                                i.material-icons Sil
+
+            footer.footer
+                .container
+                    #copyright.copyright
+                        | ©
+                        script.
+                            document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                        | , Designed by
+                        a(href='https://www.invisionapp.com', target='_blank') Invision
+                        | . Coded by
+                        a(href='https://www.creative-tim.com', target='_blank') Creative Tim
+                        | .

@@ -1,0 +1,73 @@
+extends layout
+
+block content
+    .wrapper
+        // End Navbar
+        .panel-header.panel-header-lg
+            canvas#bigDashboardChart
+        .content
+            #001.row
+                .col-lg-4
+                    .card.card-chart
+                        .card-header
+                            h5.card-category Global Sales
+                            h4.card-title Shipped Products
+                            .dropdown
+                                button.btn.btn-round.btn-default.dropdown-toggle.btn-simple.btn-icon.no-caret(type='button', data-toggle='dropdown')
+                                    i.now-ui-icons.loader_gear
+                                .dropdown-menu.dropdown-menu-right
+                                    a.dropdown-item(href='#') Action
+                                    a.dropdown-item(href='#') Another action
+                                    a.dropdown-item(href='#') Something else here
+                                    a.dropdown-item.text-danger(href='#') Remove Data
+                        .card-body
+                            .chart-area
+                                canvas#lineChartExample
+                        .card-footer
+                            .stats
+                                i.now-ui-icons.arrows-1_refresh-69
+                                |  Just Updated
+                .col-lg-4.col-md-6
+                    .card.card-chart
+                        .card-header
+                            h5.card-category 2018 Sales
+                            h4.card-title All products
+                            .dropdown
+                                button.btn.btn-round.btn-default.dropdown-toggle.btn-simple.btn-icon.no-caret(type='button', data-toggle='dropdown')
+                                    i.now-ui-icons.loader_gear
+                                .dropdown-menu.dropdown-menu-right
+                                    a.dropdown-item(href='#') Action
+                                    a.dropdown-item(href='#') Another action
+                                    a.dropdown-item(href='#') Something else here
+                                    a.dropdown-item.text-danger(href='#') Remove Data
+                        .card-body
+                            .chart-area
+                                canvas#lineChartExampleWithNumbersAndGrid
+                        .card-footer
+                            .stats
+                                i.now-ui-icons.arrows-1_refresh-69
+                                |  Just Updated
+                .col-lg-4.col-md-6
+                    .card.card-chart
+                        .card-header
+                            h5.card-category Email Statistics
+                            h4.card-title 24 Hours Performance
+                        .card-footer
+                            .stats
+                                i.now-ui-icons.ui-2_time-alarm
+                                |  Last 7 days
+    script.
+        var category_id = 1;
+        var title_id = 1000;
+        var Devices = !{devices};
+        Devices.forEach(function (element) {
+            var on = document.getElementById("001").innerHTML;
+            url = "/detail"+element.devicesocket +"-"+element.devicesensor;
+            document.getElementById("001").innerHTML= on + '<div class="col-lg-4 col-md-6"><div class="card card-chart"><div class="card-header">  <h5 class="card-category" id="'+category_id+'">Email Statistics</h5><h4 class="card-title" id="'+title_id+'">24 Hours Performance</h4><div class="dropdown"><button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" data-toggle="dropdown"><i class="now-ui-icons loader_gear"></i></button><div class="dropdown-menu dropdown-menu-right"><a class="dropdown-item" href="'+url+'">Watch NOW!</a></div></div></div> <div class="card-body">  <div class="chart-area"> <canvas id="barChartSimpleGradientsNumbers"></canvas> </div></div><div class="card-footer"> <div class="stats"><i class="now-ui-icons ui-2_time-alarm"></i> Last 7 days</div></div></div></div>';
+            document.getElementById(category_id).innerHTML = element.devicearea;
+            document.getElementById(title_id).innerHTML = element.devicename;
+            category_id++;
+            title_id++;
+        });
+
+

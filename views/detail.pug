@@ -1,0 +1,221 @@
+extends detail-layout
+
+block content
+    .wrapper
+        .sidebar(data-color='orange')
+            //
+              Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+            .logo
+                a.simple-text.logo-mini
+                    | mA
+                a.simple-text.logo-normal
+                    | myADMIN
+            .sidebar-wrapper
+                ul.nav
+                    li.active
+                        a(href='/')
+                            i.now-ui-icons.design_app
+                            p Dashboard
+                    li
+                        a(href='/profile')
+                            i.now-ui-icons.users_single-02
+                            p User Profile
+                    li
+                        a(href='/tables')
+                            i.now-ui-icons.design_bullet-list-67
+                            p Devices List
+                    //
+                        li
+                            a(href='./icons.html')
+                                i.now-ui-icons.education_atom
+                                p Icons
+                        li
+                            a(href='./map.html')
+                                i.now-ui-icons.location_map-big
+                                p Maps
+                        li
+                            a(href='./notifications.html')
+                                i.now-ui-icons.ui-1_bell-53
+                                p Notifications
+                        li
+                            a(href='./typography.html')
+                                i.now-ui-icons.text_caps-small
+                                p Typography
+                    li.active-pro
+                        a(href='/logout')
+                            i.now-ui-icons.media-1_button-power
+                            p Logout
+        .main-panel
+            // Navbar
+            nav.navbar.navbar-expand-lg.fixed-top.navbar-transparent.bg-primary.navbar-absolute
+                .container-fluid
+                    .navbar-wrapper
+                        .navbar-toggle
+                            button.navbar-toggler(type='button')
+                                span.navbar-toggler-bar.bar1
+                                span.navbar-toggler-bar.bar2
+                                span.navbar-toggler-bar.bar3
+                        a.navbar-brand Cihaz Detayları
+                    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navigation', aria-controls='navigation-index', aria-expanded='false', aria-label='Toggle navigation')
+                        span.navbar-toggler-bar.navbar-kebab
+                        span.navbar-toggler-bar.navbar-kebab
+                        span.navbar-toggler-bar.navbar-kebab
+                    #navigation.collapse.navbar-collapse.justify-content-end
+                        //
+                          form
+                            .input-group.no-border
+                              input.form-control(type='text', value='', placeholder='Search...')
+                              .input-group-append
+                                .input-group-text
+                                  i.now-ui-icons.ui-1_zoom-bold
+                        ul.navbar-nav
+                            //
+                              li.nav-item
+                                a.nav-link(href='#pablo')
+                                  i.now-ui-icons.media-2_sound-wave
+                                  p
+                                    span.d-lg-none.d-md-block Stats
+                            li.nav-item.dropdown
+                              a#navbarDropdownMenuLink.nav-link.dropdown-toggle(href='http://example.com', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+                                i.now-ui-icons.users_single-02
+                                p= name
+                                  span.d-lg-none.d-md-block Some Actions
+                              .dropdown-menu.dropdown-menu-right(aria-labelledby='navbarDropdownMenuLink')
+                                  a.dropdown-item(href='/profile') Edit Profile
+                                  a.dropdown-item(href='/logout') Logout
+            // End Navbar
+            .panel-header.panel-header-lg
+                //canvas#bigDashboardChart
+            .content
+                #001.row
+                    .col-md-6
+                        .card.card-chart
+                            .card-header
+                                #1.h5.card-category Email Statistics
+                                #1000.h4.card-title 24 Hours Performance
+                            .card-body
+                                .chart-area
+                                    #chartContainer
+                            .card-footer
+                                .stats
+                                    i.now-ui-icons.ui-2_time-alarm
+                                    |  Last 7 days
+                    .col-md-6
+                        .card
+                            .card-body
+                                table.table
+                                    thead.text-primary
+                                        tr
+                                            th
+                                                | Tarih
+                                            th
+                                                | Değer
+                                .table-responsive
+                                    .table-wrapper
+                                        table#020.table
+                                            .tbody
+                                                for element in deger
+                                                    tr
+                                                        td= element.date
+                                                        td= element.value
+                script.
+                    var category_id = 1;
+                    var title_id = 1000;
+                    var Devices = !{info};
+                    Devices.forEach(function (element) {
+                        var on = document.getElementById("001").innerHTML;
+                        document.getElementById(category_id).innerHTML = element.devicearea;
+                        document.getElementById(title_id).innerHTML = element.devicename;
+                    });
+                script.
+                    window.onload = function () {
+                        var chartValues = !{values};
+                        chartValues.reverse();
+                        var dps = [];
+                        var count = 1;
+                        chartValues.forEach(function(element) {
+                            var xVal = element.date.split(' ');
+                            var yVal = parseInt(element.value);
+                            dps.push({x:count, y:yVal, label: xVal[1]});
+                            count++;
+                        }); //dataPoints.
+
+                        var chart = new CanvasJS.Chart("chartContainer", {
+                            title: {
+                                text: "Live Data"
+                            },
+                            axisY: {
+                                title: "Value"
+                            },
+                            data: [{
+                                xValueFormatString:"string",
+                                type: "line",
+                                dataPoints: dps
+                            }]
+                        });
+
+                        chart.render();
+                        var xVal = dps.length + 1;
+                        var yVal = 15;
+                        var updateInterval = 1000;
+
+                        const Info = !{info};
+                        const url = "http://localhost:3000" + Info[0].devicesocket;
+                        const socket = io.connect(url);
+                        var temp = Info[0].devicesocket.split('/');
+                        var sensor = temp[1] + "-" + Info[0].devicesensor;
+                        socket.on(sensor, function (topic, data) {
+                            updateChart(topic);
+                            addRow(topic);
+                        });
+
+                        var updateChart = function (val) {
+
+
+                            yVal = parseInt(val);
+                            var date = new Date(Date.now()).toLocaleString();
+                            var temp = date.split(' ');
+                            dps.push({x: xVal, y: yVal, label: temp[1]});
+
+                            xVal++;
+                            if (dps.length > 10) {
+                                dps.shift();
+                            }
+
+                            chart.render();
+
+                            // update chart after specified time.
+
+                        };
+                    }
+                    function addRow(value) {
+                        var table = document.getElementById("020");
+                        var row = table.insertRow(0);
+                        var cell1 = row.insertCell(0);
+                        var cell2 = row.insertCell(1);
+                        cell1.innerHTML = new Date(Date.now()).toLocaleString();
+                        cell2.innerHTML = value;
+                    }
+            footer.footer
+                .container
+                    //
+                        nav
+                            ul
+                                li
+                                    a(href='https://www.creative-tim.com')
+                                        | Creative Tim
+                                li
+                                    a(href='http://presentation.creative-tim.com')
+                                        | About Us
+                                li
+                                    a(href='http://blog.creative-tim.com')
+                                        | Blog
+                    #copyright.copyright
+                        | ©
+                        script.
+                            document.getElementById('copyright').appendChild(document.createTextNode(new Date().getFullYear()))
+                        | , Designed by
+                        a(href='https://www.invisionapp.com', target='_blank') Invision
+                        | . Coded by
+                        a(href='https://www.creative-tim.com', target='_blank') Creative Tim
+                        | .

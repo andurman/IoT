@@ -2,6 +2,7 @@
 IoT cihazlarından gelen verilerin websocketler ile canlı olarak izlenmesi.
 
 Projenin klonunu indirdikten sonra npm install komunutu çalıştırmak gerekiyor.
+Ayrıca MoscaBroker'ın klonunu da almanız gerekmektedir.
 
 Proje ile ilgili ekran görüntüleri:
 
